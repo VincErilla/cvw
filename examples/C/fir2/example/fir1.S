@@ -14,13 +14,15 @@
 // t4: pointer to c[i] in i loop
 // t5: pointer to x[j-i+(m-1)]
 // t6: value of c[i]
-// a5: value of x[j-i+(m-1)]
+// a5: value of x[j-1+(m-1)]
 
 .global fir
 
-
 fir:
 
+    lw   t1, 4(a0)        # t1 = x[0+4];
+    lw   t2, 4(a1)        # t2 = c[0+4];
+    addi t3, zero, 42
 
 
 donej:
