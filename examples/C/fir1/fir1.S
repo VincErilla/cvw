@@ -20,23 +20,36 @@
 
 
 fir:
+    sub t0, a3, a4 # t0 = n-m
+    addi t0, t0, 1 # t0 = t0+1
+    slli t0, t0, 2
+    add t0, a2, t0
+    slli t1, a4, 2 # t1 = a4*4
+    add t1, a1, t1 # t1 = a1+t1
+    mv t2, a2
 
 
 j_loop:
     bge a2, t0, donej
-    sw zero, 0(a2) # y{j} = 0
+    li t3, 0
     mv t4, a1 # t4 = a1
-    li t3, 0 # t3 = 0
-    add t5, a0, t2  # t5 = a0
+    sub t6, a2, t2
+    add t5, a0, t6
+    addi t6, a4, -1
+    slli t6, t6, 2
+    add t5, t5, t6
+
 i_loop:
     bge t4, t1, donei
     lw t6, 0(t4)
     lw a5, 0(t5)
-    mul s2, t6, a5
-    srai s2, s2, 31
-    add t3, t3, s2
+    mul a6, t6, a5
+    srai a6, a6, 31
+    add t3, t3, a6
     addi t4, t4, 4 # i++
+    addi t5, t5, -4
     j i_loop
+
 donei:
     sw t3, 0(a2)
     addi a2, a2, 4 # j++
